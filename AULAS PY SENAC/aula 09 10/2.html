@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <script>
+            // const duas matrizes 3x3
+const matriz1 = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+const matriz2 = [
+  [9, 8, 7],
+  [6, 5, 4],
+  [3, 2, 1]
+];
+
+// soma de duas matrizes
+function somarMatrizes(m1, m2) {
+  // Verificação
+  if (m1.length !== m2.length || m1[0].length !== m2[0].length) {
+      throw new Error("As matrizes devem ter as mesmas dimensões.");
+  }
+
+  // resul
+  let resultado = [];
+
+  // elementos 
+  for (let i = 0; i < m1.length; i++) {
+      let linhaResultado = [];
+      for (let j = 0; j < m1[i].length; j++) {
+          linhaResultado.push(m1[i][j] + m2[i][j]);
+      }
+      resultado.push(linhaResultado);
+  }
+
+  return resultado;
+}
+
+// exibindo o resultado
+const resultadoSoma = somarMatrizes(matriz1, matriz2);
+
+// Exibindo a matriz resultante
+console.log("Resultado da soma das matrizes:");
+resultadoSoma.forEach(linha => console.log(linha));
+
+        </script>
+    </div>
+</body>
+</html>

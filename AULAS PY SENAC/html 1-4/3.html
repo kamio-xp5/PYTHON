@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="exercicio 3" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Função para multiplicar duas matrizes 2x2
+function multiplicarMatrizes(m1, m2) {
+  // Verificando se ambas as matrizes são 2x2
+  if (m1.length !== 2 || m1[0].length !== 2 || m2.length !== 2 || m2[0].length !== 2) {
+      throw new Error("As matrizes devem ser 2x2.");
+  }
+
+  // Criando a matriz resultado da multiplicação
+  let resultado = [
+      [0, 0],
+      [0, 0]
+  ];
+
+  // Calculando os elementos da matriz resultado
+  for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < 2; j++) {
+          for (let k = 0; k < 2; k++) {
+              resultado[i][j] += m1[i][k] * m2[k][j];
+          }
+      }
+  }
+
+  return resultado;
+}
+
+// Exemplo de duas matrizes 2x2
+const matriz1 = [
+  [1, 7],
+  [5, 4]
+];
+
+const matriz2 = [
+  [5, 9],
+  [3, 2]
+];
+
+// Chamando a função e exibindo o resultado
+const resultadoMultiplicacao = multiplicarMatrizes(matriz1, matriz2);
+
+// Exibindo a matriz resultado no console
+console.log("Matriz 1:");
+matriz1.forEach(linha => console.log(linha));
+
+console.log("\nMatriz 2:");
+matriz2.forEach(linha => console.log(linha));
+
+console.log("\nResultado da multiplicação:");
+resultadoMultiplicacao.forEach(linha => console.log(linha));
+
+    </script>
+</body>
+</html>

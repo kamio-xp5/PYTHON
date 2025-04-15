@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> transporta matriz</h1>
+
+  <script>
+    // Função para transpor uma matriz 3x3
+function transporMatriz(matriz) {
+    // Criando uma nova matriz
+    let transposta = [];
+
+    // colocando a linha transposta
+    for (let i = 0; i < matriz[0].length; i++) {
+        let linhaTransposta = [];
+        for (let j = 0; j < matriz.length; j++) {
+            linhaTransposta.push(matriz[j][i]);
+        }
+        transposta.push(linhaTransposta);
+    }
+
+    return transposta;
+}
+
+//matriz 3x3
+const matriz = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+// resultado
+const matrizTransposta = transporMatriz(matriz);
+
+// Exibindo a matriz no console
+console.log("Matriz original:");
+matriz.forEach(linha => console.log(linha));
+
+console.log("\nMatriz transposta:");
+matrizTransposta.forEach(linha => console.log(linha));
+
+  </script>
+
+</body>
+</html>

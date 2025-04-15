@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Velha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+      margin: 0;
+    }
+
+    .game-container {
+      text-align: center;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      margin: 20px 0;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      background-color: #e0e0e0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .cell:hover {
+      background-color: #ddd;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .restart-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .restart-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Jogo da Velha</h1>
+    <div class="board" id="board"></div>
+    <div class="message" id="message">Jogador X, sua vez!</div>
+    <button class="restart-btn" onclick="restartGame()">Reiniciar Jogo</button>
+  </div>
+
+  <script>
+    // Inicializa o tabuleiro como uma matriz 3x3
+    let board = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ];
+
+    let currentPlayer = 'X'; // Jogador inicial
+    let gameOver = false;
+
+    const boardElement = document.getElementById('board');
+    const messageElement = document.getElementById('message');
+
+    // Função para desenhar o tabuleiro na tela
+    function drawBoard() {
+      boardElement.innerHTML = ''; // Limpa o tabuleiro
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.textContent = board[row][col];
+          cell.onclick = () => makeMove(row, col);
+          boardElement.appendChild(cell);
+        }
+      }
+    }
+
+    // Função para fazer uma jogada
+    function makeMove(row, col) {
+      if (gameOver) {
+        return;
+      }
+
+      if (board[row][col] !== '') {
+        alert('Essa posição já foi ocupada!');
+        return;
+      }
+
+      // Realiza a jogada
+      board[row][col] = currentPlayer;
+      drawBoard();
+
+      if (checkWinner()) {
+        messageElement.textContent = `Jogador ${currentPlayer} venceu!`;
+        gameOver = true;
+      } else if (board.flat().every(cell => cell !== '')) {
+        messageElement.textContent = 'Empate!';
+        gameOver = true;
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        messageElement.textContent = `Jogador ${currentPlayer}, sua vez!`;
+      }
+    }
+
+    // Função para verificar se há um vencedor
+    function checkWinner() {
+      // Verificar linhas, colunas e diagonais
+      for (let i = 0; i < 3; i++) {
+        if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+          return true; // Linha
+        }
+        if (board[0][i] !== '' && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+          return true; // Coluna
+        }
+      }
+
+      // Verificar diagonais
+      if (board[0][0] !== '' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+        return true; // Diagonal principal
+      }
+      if (board[0][2] !== '' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+        return true; // Diagonal secundária
+      }
+
+      return false;
+    }
+
+    // Função para reiniciar o jogo
+    function restartGame() {
+      board = [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
+      ];
+      currentPlayer = 'X';
+      gameOver = false;
+      messageElement.textContent = `Jogador ${currentPlayer}, sua vez!`;
+      drawBoard();
+    }
+
+    // Desenha o tabuleiro inicial
+    drawBoard();
+  </script>
+</body>
+</html>
