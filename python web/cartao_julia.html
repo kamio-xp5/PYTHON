@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Julia 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom right, #ffd1dc, #ffe7ba, #c2f0fc);
+      animation: gradientMove 10s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff4d6d;
+      margin-top: 20px;
+      font-size: 2.5em;
+    }
+
+    p {
+      text-align: center;
+      color: #333;
+      max-width: 700px;
+      margin: 20px auto;
+      font-size: 1.2em;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .gallery img {
+      border-radius: 20px;
+      width: 250px;
+      height: auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .falling-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .falling-hearts span {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 24px;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .love-button {
+      display: block;
+      margin: 30px auto;
+      padding: 15px 30px;
+      background-color: #ff4d6d;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .love-button:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 1em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Música de fundo -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <!-- Corações caindo -->
+  <div class="falling-hearts">
+    <!-- Gera vários corações com posições e delays diferentes -->
+    <script>
+      for (let i = 0; i < 30; i++) {
+        let heart = document.createElement("span");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 5 + 3) + "s";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.querySelector(".falling-hearts").appendChild(heart);
+      }
+    </script>
+  </div>
+
+  <h1>Julinha 157 💌</h1>
+  <p>
+    Meu amor, Julia... 💖<br><br>
+    Talvez palavras nunca consigam expressar por completo o quanto você significa pra mim. Mas hoje, humildemente, tento com o coração aberto, com arrependimento sincero e uma vontade imensa de fazer tudo dar certo entre nós.  
+  </p>
+  
+  <p>
+    Você é o meu lar em forma de pessoa.  
+    É o riso que me salva nos dias tristes.  
+    É quem enxergou beleza nas partes minhas que até eu tinha medo.  
+    <br><br>
+    E mesmo quando eu errei, você foi sol.  
+    Mesmo machucada, você mostrou amor.<br><br>
+  
+    Hoje eu quero te agradecer por tudo:<br>
+    Por acreditar em mim quando eu nem merecia,<br>
+    Por me dar seu tempo, sua energia, sua calma,<br>
+    Por me amar de um jeito que ninguém jamais fez ou fará.<br><br>
+  
+    E mais do que tudo... eu quero reconquistar sua paz.
+  </p>
+  
+  <p>
+    <strong>Esse poema é seu, nasceu de você em mim:</strong>
+  </p>
+  
+  <p style="font-style: italic; background-color: rgba(255, 255, 255, 0.6);">
+    Em ti encontrei um mundo calmo,<br>
+    Um coração que sabe abraçar até com o olhar.<br>
+    Te perder seria como perder o céu azul<br>
+    — e eu só quero aprender a voar pra sempre ao teu lado.<br><br>
+  
+    Se errei, foi tentando acertar no caos que é amar demais.<br>
+    Mas meu amor por ti não tem vaidade, só verdade.<br>
+    Porque você, Julia, é poesia viva...<br>
+    E eu só peço: me deixa ser rima tua outra vez.
+  </p>
+  
+  <p>
+    Julia, você merece tudo de melhor no mundo.<br>
+    E eu estou disposto a ser esse "melhor" — não com promessas vazias, mas com atitudes, com escuta, com presença.<br><br>
+  
+    Te amo com a alma inteira, e sempre vou te escolher, mesmo nos dias difíceis. 💘
+  </p>
+  
+
+  <div class="gallery">
+    <img src="imagens/0b48a7a3-791f-4860-8216-8915e8367afd.png" alt="nós dois juntos 1">
+    <img src="imagens/d7831bad-59d7-4266-8072-96211a226c01.png" alt="nós dois juntos 2">
+    <img src="imagens/ef3d661f-5526-441f-9ece-77d8cf04d9a6.png" alt="nós dois juntos 3">
+  </div>
+
+  <p>
+    Cada foto é uma lembrança linda... E quero fazer mais milhares ao seu lado. Nunca se esqueça do quanto eu te amo, Julia. 💘<br>
+    Você é meu mundo inteiro!
+  </p>
+
+  <!-- Botão especial -->
+  <button class="love-button" onclick="alert('Eu te amo mais do que tudo, Julia 💗 Nunca desista de nós!')">
+    Clique aqui se você ainda acredita no nosso amor 💞
+  </button>
+
+  <footer>
+    Feito com muito amor por quem te ama incondicionalmente 💕
+  </footer>
+
+</body>
+</html>
