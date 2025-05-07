@@ -1,0 +1,169 @@
+import json
+import os
+import tkinter as tk
+from tkinter import messagebox, ttk
+
+USERS_FILE = os.path.join("users", "users.json")
+
+def load_users():
+    if not os.path.exists(USERS_FILE):
+        return []
+    try:
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            users = json.load(f)
+            return users if isinstance(users, list) else []
+    except (json.JSONDecodeError, IOError):
+        return []
+
+def save_users(users):
+    try:
+        os.makedirs("users", exist_ok=True)
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump(users, f, indent=2, ensure_ascii=False)
+    except IOError as e:
+        messagebox.showerror("Erro", f"Erro ao salvar usuários: {e}")
+
+class UserManagerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("📚 Biblioteca dos Usuários Sábios")
+        self.root.geometry("650x600")
+        self.root.iconbitmap(default="icon.ico")  # Coloque um arquivo 'icon.ico' no mesmo diretório
+
+        self.users = load_users()
+        self.filtered_users = list(self.users)
+
+        # Tema
+        self.colors = {
+            "light": {"bg": "#fdf6e3", "fg": "#333", "entry_bg": "#ffffff"},
+            "dark": {"bg": "#1e1e1e", "fg": "#dddddd", "entry_bg": "#2e2e2e"}
+        }
+        self.theme = "light"
+
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.build_ui()
+        self.apply_theme()
+
+    def build_ui(self):
+        self.frame = ttk.Frame(self.root, padding=20)
+        self.frame.pack(fill="both", expand=True)
+
+        self.title_label = ttk.Label(self.frame, text="🧠 Biblioteca de Sabedoria", font=("Georgia", 18, "bold"))
+        self.title_label.pack(pady=(0, 5))
+
+        self.quote_label = ttk.Label(self.frame, text="\"A mente que se abre a uma nova ideia jamais volta ao seu tamanho original.\" – Albert Einstein", font=("Georgia", 10, "italic"))
+        self.quote_label.pack(pady=(0, 15))
+
+        # Busca
+        search_frame = ttk.Frame(self.frame)
+        search_frame.pack(pady=(0, 10))
+
+        ttk.Label(search_frame, text="🔎 Buscar:").pack(side="left")
+        self.search_var = tk.StringVar()
+        self.search_var.trace_add("write", self.filter_users)
+        self.search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=30)
+        self.search_entry.pack(side="left", padx=5)
+
+        self.tree = ttk.Treeview(self.frame, columns=("Nome", "Email"), show="headings", height=10)
+        self.tree.heading("Nome", text="Nome")
+        self.tree.heading("Email", text="E-mail")
+        self.tree.pack(pady=10, fill="x")
+
+        self.load_treeview()
+
+        # Formulário
+        form_frame = ttk.Frame(self.frame)
+        form_frame.pack(pady=10)
+
+        ttk.Label(form_frame, text="Nome:").grid(row=0, column=0, sticky="e", padx=5, pady=5)
+        self.nome_entry = ttk.Entry(form_frame, width=30)
+        self.nome_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        ttk.Label(form_frame, text="E-mail:").grid(row=1, column=0, sticky="e", padx=5, pady=5)
+        self.email_entry = ttk.Entry(form_frame, width=30)
+        self.email_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        # Botões
+        btn_frame = ttk.Frame(self.frame)
+        btn_frame.pack(pady=10)
+
+        ttk.Button(btn_frame, text="➕ Adicionar Usuário", command=self.add_user).grid(row=0, column=0, padx=5)
+        ttk.Button(btn_frame, text="🗑️ Remover Selecionado", command=self.remove_user).grid(row=0, column=1, padx=5)
+        ttk.Button(btn_frame, text="🌓 Alternar Tema", command=self.toggle_theme).grid(row=0, column=2, padx=5)
+
+    def apply_theme(self):
+        colors = self.colors[self.theme]
+        self.root.configure(bg=colors["bg"])
+        self.frame.configure(style="TFrame", padding=20)
+
+        for widget in self.frame.winfo_children():
+            if isinstance(widget, ttk.Entry):
+                widget.configure(background=colors["entry_bg"], foreground=colors["fg"])
+            elif isinstance(widget, ttk.Label):
+                widget.configure(background=colors["bg"], foreground=colors["fg"])
+        self.style.configure("Treeview", background=colors["entry_bg"], foreground=colors["fg"], rowheight=30, fieldbackground=colors["entry_bg"])
+        self.style.configure("Treeview.Heading", font=("Georgia", 11, "bold"))
+
+    def toggle_theme(self):
+        self.theme = "dark" if self.theme == "light" else "light"
+        self.apply_theme()
+
+    def load_treeview(self):
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+        for user in self.filtered_users:
+            self.tree.insert("", "end", values=(user["nome"], user["email"]))
+
+    def filter_users(self, *args):
+        term = self.search_var.get().lower()
+        self.filtered_users = [u for u in self.users if term in u["nome"].lower() or term in u["email"].lower()]
+        self.load_treeview()
+
+    def add_user(self):
+        nome = self.nome_entry.get().strip()
+        email = self.email_entry.get().strip()
+
+        if not nome or not email:
+            messagebox.showwarning("Campos obrigatórios", "Por favor, preencha todos os campos.")
+            return
+
+        if '@' not in email or '.' not in email:
+            messagebox.showwarning("E-mail inválido", "Insira um e-mail válido.")
+            return
+
+        if any(u['email'].lower() == email.lower() for u in self.users):
+            messagebox.showwarning("Duplicado", "Este e-mail já está cadastrado.")
+            return
+
+        new_user = {"nome": nome, "email": email}
+        self.users.append(new_user)
+        save_users(self.users)
+        self.search_var.set("")  # limpa filtro
+        self.filtered_users = list(self.users)
+        self.load_treeview()
+        self.nome_entry.delete(0, tk.END)
+        self.email_entry.delete(0, tk.END)
+        messagebox.showinfo("Sucesso", f"Usuário '{nome}' foi adicionado à biblioteca da sabedoria.")
+
+    def remove_user(self):
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showwarning("Seleção necessária", "Selecione um usuário para remover.")
+            return
+
+        user_data = self.tree.item(selected[0])['values']
+        confirm = messagebox.askyesno("Confirmar Remoção", f"Deseja mesmo remover '{user_data[0]}'?")
+        if confirm:
+            self.users = [u for u in self.users if not (u['nome'] == user_data[0] and u['email'] == user_data[1])]
+            save_users(self.users)
+            self.search_var.set("")
+            self.filtered_users = list(self.users)
+            self.load_treeview()
+            messagebox.showinfo("Removido", f"Usuário '{user_data[0]}' foi removido com sucesso.")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = UserManagerApp(root)
+    root.mainloop()

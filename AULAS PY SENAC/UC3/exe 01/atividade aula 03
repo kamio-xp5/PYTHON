@@ -1,0 +1,64 @@
+produtos = [
+
+{"nome": "pc", "preco": 1200},
+
+{"nome": "Mouse", "preco": 180},
+
+{"nome": "Monitor", "preco": 100},
+
+{"nome": "Teclado", "preco": 200}
+
+]
+
+produtos_caros = [p for p in produtos if p["preco"] > 1000]
+
+print("Produtos com preço > 1000:", produtos_caros)
+
+produtos = [
+
+{"nome": "pc", "categoria": "Informática"},
+
+{"nome": "Mouse", "categoria": "Periféricos"},
+
+{"nome": "Teclado", "categoria": "Periféricos"},
+
+{"nome": "Monitor", "categoria": "Informática"}
+
+]
+
+contagem = {}
+
+for produto in produtos:
+
+  cat = produto["categoria"]
+
+  contagem[cat] = contagem.get(cat, 0) + 1
+
+print("qntd de produtos em categoria:", contagem)
+
+
+
+
+pedidos = ["xamsp", "dev", "gugucamargo"]
+pedidosunico = list(set(pedidos))
+
+print("pedidos unicos", pedidosunico)
+
+colaboradores = {}
+
+def Adicionar_socio(id, name, salario):
+    colaboradores[id] = {"name": name, "salario": salario}
+
+def procurar_por_id(id):
+    return colaboradores.get(id, "colaborador não encontrado")
+
+def listar_acima_de(salario_minimo):
+    return {id: dados for id, dados in colaboradores.items() if dados["salario"] > salario_minimo}
+
+# Exemplo de uso:
+Adicionar_socio(1, "João", 3000)
+Adicionar_socio(2, "Maria", 4500)
+Adicionar_socio(3, "Carlos", 2500)
+
+print("Buscar ID 2:", procurar_por_id(2))
+print("Colaboradores com salário > 3000:", listar_acima_de(3000))
