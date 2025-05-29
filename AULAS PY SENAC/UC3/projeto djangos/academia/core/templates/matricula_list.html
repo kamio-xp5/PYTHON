@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Lista de Matrículas</h2>
+<a href="{% url 'matricula_create' %}" class="btn btn-success mb-3">Nova Matrícula</a>
+<table class="table table-bordered">
+  <tr>
+    <th>Aluno</th>
+    <th>Plano</th>
+    <th>Data</th>
+    <th>Ações</th>
+  </tr>
+  {% for m in matriculas %}
+  <tr>
+    <td>{{ m.aluno }}</td>
+    <td>{{ m.plano }}</td>
+    <td>{{ m.data }}</td>
+    <td>
+      <a href="{% url 'matricula_update' m.id %}" class="btn btn-sm btn-warning">Editar</a>
+      <a href="{% url 'matricula_delete' m.id %}" class="btn btn-sm btn-danger">Excluir</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

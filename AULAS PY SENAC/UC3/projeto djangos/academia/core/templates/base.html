@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Academia{% endblock %}</title>
+    <style>
+        body { background: #222; color: #fff; font-family: Arial, sans-serif; margin: 0; }
+        header, footer { background: #333; padding: 1rem; text-align: center; }
+        nav a { color: #ffb347; margin: 0 1rem; text-decoration: none; }
+        nav a:hover { color: #fff; }
+        .container { max-width: 800px; margin: 2rem auto; background: #2a2a2a; border-radius: 8px; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏋️ Academia</h1>
+        <nav>
+            <a href="{% url 'aluno_list' %}">Alunos</a>
+            <a href="{% url 'matricula_list' %}">Matrículas</a>
+            <a href="{% url 'plano_list' %}">Planos</a>
+        </nav>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>&copy; {{ year|default:"2025" }} Academia</p>
+    </footer>
+</body>
+</html>
